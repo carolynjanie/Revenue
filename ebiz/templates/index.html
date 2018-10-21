@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+{% load leaflet_tags %}
+{% load static%}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{%static 'hchart/highcharts.css' %}">
+<script type="text/javascript" src="{%static 'hchart/highcharts.js' %}"></script>
+<h1>
+    {% for item in slots %}
+    {{item.pid}} <br>
+    {{item.amount_pai}}
+    {%endfor%}
+</h1>
+<div>
+  {% for q in qs %}
+    {{q}}
+  {% endfor %}
+</div>
+<script type="text/javascript">
+
+  var myStyle = {
+    "color": "#ff7800",
+    "weight": 5,
+    "opacity": 0.65,
+    "roofColor": "purple"
+  };
+
+  var myStyle1 = {
+    "color": "black",
+    "weight": 5,
+    "opacity": 0.65
+  };
+
+  var myStyle2 = {
+    "color": "red",
+    "weight": 5,
+    "opacity": 0.65
+  };
+
+  function StatusPaid(amount){
+    if(amount == 0 ){
+      return 'red';
+    }else{
+      return 'lime';
+    }
+  }
+
+  function StatusStyle(feature){
+    return {
+      fillColor: StatusPaid(feature.properties.amount_pai),
+      weight: 2,
+      opacity: 1,
+      dashArray: 3,
+      fillOpacity: 0.7
+    }
+  }
+
+  function layerpopup(feature,layer){
+    console.log('testing',feature.properties.amount_pai);
+    if(feature.properties.amount_pai== 0){
+      pop = 'Book me';
+      layer.bindPopup(pop);
+    }else{
+      pop = 'Already booked'
+      layer.bindPopup(pop);
+    }
+      
+      
+  }
+
+  var osm = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+              maxZoom: 17,
+              attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+            });
+                    
+
+  var grayscale = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+                  maxZoom: 18,
+                  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  });
+          
+  var osmt = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}', {
+              attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+              subdomains: 'abcd',
+              minZoom: 0,
+              maxZoom: 10,
+              ext: 'png'
+            });
+  
+    function ebiza(map,options){
+var parcel = new L.GeoJSON.AJAX("{% url 'ebiz:parcels' %}",{
+       onEachFeature: function layerpopup(feature,layer){
+                 layer.bindPopup('Land rate '+(feature.properties.area*0.08*100000).toString()+'<br> Plot Number '+feature.properties.plot_no);
+      },
+            style: myStyle1
+
+        });
+        // parcel.addTo(map);
+var parking = new L.GeoJSON.AJAX("{% url 'ebiz:parks' %}",{
+  onEachFeature: layerpopup,
+            style:StatusStyle,
+
+
+        });
+        parking.addTo(map);
+
+var baselayer={
+      "OSM":osm,
+      "Grayscale":grayscale,
+      "OSM_Thunder":osmt
+    };
+    var overlays={
+      "Parcels":parcel,
+      "Parking":parking,
+      // "Footprints":fts
+    };
+
+    L.control.layers(baselayer, overlays).addTo(map);
+
+
+  L.control.search({
+                        layer: parcel,
+                        initial: false,
+                        propertyName: 'plot_no',
+                        buildTip: function(text, val) {
+                          var type = val.layer.feature.properties.plot_no;
+                          return '<b>'+type+'</b>';
+                        }
+
+                    }).addTo(map);
+
+ L.Routing.control({
+                        waypoints: [
+                          L.latLng(-0.421071, 36.949768 ),
+                          L.latLng(-0.421071,36.949 )
+                        ],
+                        routeWhileDragging:true,
+                        geocoder:L.Control.Geocoder.nominatim()
+                      }).addTo(map);
+
+$.get("{% url 'ebiz:ftp-data' %}",function(data,success){
+  fts=new OSMBuildings(map)
+    .set(data).click(function(id,lat,lng){
+      if(id){
+        var popup=L.popup({minWidth:70,maxWidth:300}).setLatLng(L.latLng(id.lat,id.lon)).setContent('<p>Footprint ID: '+id.feature+' popup.</p>').openOn(map);
+          $.ajax({
+            url: "/footprint/"+id.feature+"/",
+            type: 'json',
+            method: 'get',
+            success: function(data){
+              link='/floor/'+id.feature+'/';
+              popup.setContent('<p>Footprint name: '+data.name+'<br>Building height: '+data.height+'<br> Plot Number: '+data.plot_no+
+              '<br>Building Floors: <a id="bid-info" href="'+link+'">'+data.floors+'</a></p>').openOn(map);
+            $('#bid-info').click(function(e){
+              e.preventDefault();
+              $.ajax({
+                url:$(this).attr('href'),
+                type:'json',
+                method:'get',
+                success: function(data){
+                  html='<table class="table table-responsive table-stripped table-hover"><thead><th>Floor Code</th><th>Floor Name</th><th>Floor Rooms</th></thead>';
+                  $.each(data.objs, function(key,obj){
+                    f_info='/floor/'+id.feature+'/'+obj.no+'/';
+                    html+='<tr><td>'+obj.no+'</td><td>'+obj.name+'</td><td><a class="floor-info" href="'+f_info+'">'+obj.rooms+'</a></td></tr>';
+                  });
+                  html+='</table>';
+                  popup.setContent(html).openOn(map);
+                  $('.floor-info').click(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                      url:$(this).attr('href'),
+                      type:'json',
+                      method:'get',
+                      success: function(data){
+                        html='<table class="table table-responsive table-stripped table-hover" style="max-height:500px;max-width:500px;width:auto !important;"><thead><th>Business Sector</th><th>Business Activity</th><th>Permit Number</th><th>Paid Permit</th><th>Permit Balance</th><th>Business Owner</th><th>PPhone Number</th><th>ID Number</th></thead>';
+                        $.each(data.objs, function(key,obj){
+                          html+='<tr><td>'+obj.sector+'</td><td>'+obj.activity+'</td><td>'+obj.pnumber+'</td><td>'+obj.ppaid+'</td><td>'+obj.pbal+'</td><td>'+obj.owner+'</td><td>'+obj.phone+'</td><td>'+obj.idno+'</td></tr>';
+                        });
+                        html+='</table>';
+                        popup.setContent(html).openOn(map);
+                      },
+                      fail: function(status,resp){
+                        console.log(status,resp);
+                      }
+                    });
+                    return false;                  
+                  });
+                },
+                fail: function(status,resp){
+                  console.log(status,resp);
+                }
+              });
+              return false;
+            });
+            },
+            fail: function(status, resp){
+              console.log(status,resp);
+            }
+          });
+          
+        }
+      });
+     })
+
+    var layers=L.layerGroup([(parcel)]);
+    //var carol = new OSMBuildings(map).load();
+    }
+
+   
+
+
+    </script>
+    {% leaflet_map 'yourmap' callback="ebiza" %}
+
+    <div id="container"></div>
+<script type="text/javascript">
+   //Highcharts
+    Highcharts.chart('container',{
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Payment Status against Amount paid'
+      },
+      xAxis: {
+        categories: ['Payment Status']
+      },
+      yAxis: {
+        title: {
+          text: 'Amount of money Paid'
+        },
+      },
+      series: [ {
+        name: 'Paid',
+        data: {{pd|safe}},
+        color: 'green'
+      },{
+        name: 'Not Paid',
+        data: {{np|safe}},
+        color: 'red'
+      }]
+    });
+</script>
+<div id="piechart"></div>
+<script type="text/javascript">
+  Highcharts.chart('piechart',{
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Payment Status against Amount paid'
+      },
+      xAxis: {
+categories: ['Jan', 'Feb', 'Mar','Apr']
+},
+yAxis: {
+title: {
+text: 'numbers'
+}
+},
+series: [{
+name: 'John',
+data: [1, 0, 4]
+}, {
+name: 'King',
+data: [5, 7, 3]
+      },{
+        
+      }]
+    });
+  
+</script>
+{% endblock %}

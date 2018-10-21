@@ -1,0 +1,223 @@
+
+img.logo {
+margin:5px 0px 0px 400px;
+}
+
+h5.header {
+text-align:center;
+color:#4b0082;
+font-family:cambria,Bell MT,Copperplate Gothic Light;
+font-size:25px;
+}
+
+h6.header {
+text-align:center;
+margin:-40px 0px 0px 0px;
+font-size:16px;
+font-family:Script MT Bold,Forte;
+}
+
+ul.nav {
+list-style-type:none;
+margin:2px 0px 0px -40px;
+font-family:Script MT Bold,Forte;
+}
+
+li.nav {
+float:left;
+margin:0px 1px 0px 1px;
+font-family:Script MT Bold,Forte;
+}
+
+a:link.nav {
+display:block;
+text-decoration:none;
+text-align:center;
+color:#fff;
+width:138px;
+background-color:#008000;
+padding:10px 0px 10px 0px;
+font-family:Script MT Bold,Forte;
+}
+
+a:visited.nav {
+color:#fff;
+}
+
+a:active.nav {
+color:#fff;
+}
+
+a:hover.nav  {
+font-family:Script MT Bold;
+color:#fff;
+background-color:#000;
+}
+
+/*---------------------------------------------the drop down menu ----------------------------------*/
+ul ul.nav {
+display:inline-table;
+display:none;
+position:absolute;
+padding:0px;
+margin:1px 0px 0px 0px;
+list-style:none;
+}
+
+ul li:hover.nav > ul {
+display:block;
+}
+
+ ul ul :after {
+content:"";
+clear:both;
+display:block;
+}
+
+ul  ul li .drop{
+float:none;
+position:relative;
+top:150%;
+margin:1px 1px 1px 1px;
+}
+
+ul ul li a:link {
+display:block;
+text-decoration:none;
+background-color:#008000;
+text-align:center;
+margin:2px 0px 2px 0px;
+padding:5px 10px 5px 10px;
+font-family:cambria,Bell MT;
+color:#fff;
+border-radius:5px;
+top:100%;
+}
+
+ul ul li a:visited {
+color:#fff;
+}
+
+ul ul li a:active {
+color:#fff;
+}
+
+ul ul li a:hover  {
+background-color:#ffffff;
+color:#000;
+font-family:cambria;
+border-radius:5px;
+}
+/*---------------------------------------------------------------------------end of the drop down-----------------------------------------------------------*/
+
+
+h5.news {
+text-align:center;
+color:#fff;
+background-color:#fff000;
+font-family:Script MT Bold,Forte;
+font-size:15px;
+border-bottom:solid thin #000;
+}
+
+ul.download {
+list-style-type:none;
+position:absolute;
+margin:-23px 0px 0px -42px;
+width:300px;
+}
+
+li.dowload {
+margin:2px 0px 2px 2px;
+}
+
+a:link.download {
+width:246px;
+height: 40px;
+text-align:center;
+text-decoration:none;
+display:block;
+background-color:#fff000;
+margin:2px;
+padding:2px 0px 2px 0px;
+border-radius:5px ;
+color:#000;
+font-family:cambria , Bell MT;
+border:solid thin #ffa500;
+}
+
+a:visited.download{
+color:#fff;
+}
+
+a:active.download {
+color:#fff;
+}
+
+
+a:hover.download {
+background-color:#fff;
+color:#000;
+border:solid thin #000;
+}
+
+p.welcome {
+color:#1e90ff;
+border-bottom:solid thin #000;
+text-align:center;
+font-family:Edwardian Script ITC,Monotype Corsiva,Jokerman,Mistral;
+font-size:25px;
+margin:0px 2px 0px 2px;
+}
+
+p.content {
+font-family:candara, Bell MT;
+color:#000;
+margin:2px 0px 0px 4px;
+text-align:left;
+}
+
+h5.about {
+text-align:center;
+color:#fff;
+border-bottom:solid thin #000;
+background-color:#1e90ff;
+margin:25px 0px 0px 0px;
+font-family:candara;
+font-size:15px;
+}
+
+ul.about {
+list-style-type:square;
+}
+
+li.about {
+font-family:candara;
+}
+
+a:link.fee{
+display:block;
+background-color:#008000;
+text-align:center;
+font-family:candara;
+text-decoration:none;
+width:700px;
+margin:10px 0px 0px 5px;
+padding:10px 0px;
+color:#fff;
+border-radius:10px;
+}
+ 
+a:visited.fee {
+color:#fff;
+}
+
+a:active.fee {
+color:#fff;
+}
+
+a:hover.fee {
+background-color:#ffa500;
+color:#000;
+}
+

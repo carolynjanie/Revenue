@@ -1,0 +1,330 @@
+<! DOCTYE html >
+<html>
+{% load static %}
+{% load leaflet_tags %}
+
+<link rel="stylesheet"   type="text/css"  href="{%static 'engine/css/layout2.css'%}" />
+<link rel="stylesheet"   type="text/css"  href="{%static 'engine/css/style.css'%}" />
+<link rel="stylesheet" type="text/css" href="{% static 'engine/css/custom_sel.css'}" />
+
+<head>
+{% leaflet_js %}
+{% leaflet_css %}
+
+<link rel="stylesheet"   type="text/css"  href="{%static 'engine/css/layout2.css'%}" />
+<link rel="stylesheet"   type="text/css"  href="{%static 'engine/css/style.css'%}" />
+
+
+</head>
+
+<title>
+yegon|HMS
+
+</title>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<!------------------------------------header------------------------------------->
+
+<div id="header">
+
+<!-------------------------------------- logo space----------------------------->
+
+
+<!----------------------------------------------------heading------------------------------>
+<div id="headerbottom"> 
+<br><br><br>
+<h5 class="header"> <font color="ffffff">NHC HOUSING MANAGEMENT</font></h5>
+<h6 class="header"> <font color="ffff00">"building the nation"</font></h6>
+
+</div>
+</div>
+
+
+<!---ADDING NECESARY CSS FILES TO BODY-->
+<style type="text/css"> #gis {width:1280px;height:650px;align-items: center;}</style>
+
+<!--LOADING NECESARY CSS-->
+<link rel="stylesheet" type="text/css" href="{% static 'lyrctrl/leaflet.groupedlayercontrol.min.css'}" />
+<link rel="stylesheet" type="text/css" href="{% static 'routing/leaflet-routing-machine.css'}" />
+<link rel="stylesheet" type="text/css" href="{% static 'engine/search/leaflet-search.css'}" />
+
+<!----LOADING NECESARY SCRIPTS-->
+<script type="text/javascript" src="{% static 'dist/leaflet.ajax.js' %}"></script>
+<script type="text/javascript" src="{% static 'lyrctrl/leaflet.groupedlayercontrol.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'routing/leaflet-routing-machine.js' %}"></script>
+<script type="text/javascript" src="{% static 'engine/search/leaflet-search.js' %}"></script>
+
+<!--script generate from your models-->
+<script type="text/javascript">
+ function our_layers(map,options){
+
+	        	 var osm = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+					maxZoom: 17,
+					attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+				});
+	        	 var grayscale = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+				      maxZoom: 18,
+				      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+				    });
+	        	 var osmt = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}', {
+					attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+					subdomains: 'abcd',
+					minZoom: 0,
+					maxZoom: 20,
+					ext: 'png'
+				});
+
+	        	var houses = new L.GeoJSON.AJAX("{% url 'houses' %}",{
+	        		onEachFeature: function(feature,layer)
+			    	    {
+			    		layer.bindPopup(feature.properties.name.toString());
+	                    }
+					});
+					
+
+		         var subcounties = new L.GeoJSON.AJAX("{% url 'subcounties' %}",
+				{
+					style: function colors(feature)
+		        	{
+		        		switch(feature.properties.division)
+		        		{
+		        			case 'CENTRAL':
+		        			  return{
+		        			  	color: 'yellow',
+		        			  	fillOpacity: 1
+		        			  }; 
+		        			  break;
+		        	    }
+		        	    switch(feature.properties.division)
+		        		{
+		        			case 'KIBERA':
+		        			  return{
+		        			  	color: 'indigo',
+		        			  	fillOpacity: 1
+		        			  }; 
+		        			  break;
+		        	    }
+		        	    switch(feature.properties.division)
+		        		{
+		        			case 'PUMWANI':
+		        			  return{
+		        			  	color: 'red',
+		        			  	fillOpacity: 1
+		        			  }; 
+		        			  break;
+		        	    }
+		        	    switch(feature.properties.division)
+		        		{
+		        			case 'MAKADARA':
+		        			  return{
+		        			  	color: 'green',
+		        			  	fillOpacity: 1
+		        			  }; 
+		        			  break;
+		        	    }
+		        	    switch(feature.properties.division)
+		        		{
+		        			case 'DAGORETTI':
+		        			  return{
+		        			  	color: 'blue',
+		        			  	fillOpacity: 1
+		        			  }; 
+		        			  break;
+		        	    }
+		        	    switch(feature.properties.division)
+		        		{
+		        			case 'PARKLANDS/WESTLANDS':
+		        			  return{
+		        			  	color: 'black',
+		        			  	fillOpacity: 1
+		        			  }; 
+		        			  break;
+		        	    }
+		        	    switch(feature.properties.division)
+		        	    {
+		        			case 'KASARANI':
+		        			  return{
+		        			  	color: 'purple',
+		        			  	fillOpacity: 1
+		        			  }; 
+		        			  break;
+		        	    }
+						switch(feature.properties.division)
+		        	    {
+		        			case 'EMBAKASI':
+		        			  return{
+		        			  	color: 'violet',
+		        			  	fillOpacity: 1
+		        			  }; 
+		        			  break;
+		        	    }
+		        	}, 
+		        	onEachFeature: function(feature,layer)
+		    	    {
+		    		layer.bindPopup(feature.properties.division.toString());
+                    }
+                
+		        });
+		         
+		        var houses = L.layerGroup([houses]);
+		        var subcounties = L.layerGroup([subcounties]);
+		      
+				var baseLayers = {
+			    	"OSM Topo": osm,
+			    	"Grayscale": grayscale,
+			    	"OSM Thunder": osmt
+			    };
+
+			    "Layers"
+			    var groupedOverlays = {
+			    			"Location": houses,
+			    			"Regions": subcounties
+			    			};
+			 
+
+     L.control.layers(baseLayers, groupedOverlays).addTo(map);
+
+			    //*..L.Routing.control({
+				  //waypoints: [
+				    //L.latLng(-1.2898, 36.8914 ),
+				   // L.latLng(-1.2918, 36.824112 )
+				//  ]
+				//}).addTo(map);
+
+				//..var searchLayer = L.layerGroup([]).addTo(map)
+				require(["leaflet", "leafletSearch"],function(L, LeafletSearch) {
+
+					//... initialize leaflet map and dataLayer ...
+
+					map.addControl( new LeafletSearch({
+						layer: dataLayer
+					}) );
+});		    
+
+
+	};
+			
+		</script>
+
+{% leaflet_map "gis" callback="window.our_layers" %}
+
+<!-----------------------------------------------------------------------navigation------------------->
+
+<div id="nav">
+
+<ul class="nav">
+<li class="nav"><a href="{% static 'engine/pages/base2.html'%}" class="nav">Home</a></li>
+
+<li class="nav"><a href="#" class="nav">Payment</a>
+<ul class="nav">
+<li class="drop"><a href="#"> Mortgage </a></li>
+<li class="drop"><a href="#"> Rent </a></li>
+<li class="drop"><a href="#"> Utility Bills</a></li>
+<li class="drop"><a href="#"> Service Charges </a></li>
+</ul>
+</li>
+<li class="nav"><a href="Loans" class="nav">Loans</a>
+<ul class="nav">
+<li class="drop"><a href="#"> Request Loans </a></li>
+<li class="drop"><a href="#"> Pay loans </a></li>
+<li class="drop"><a href="#"> ? </a></li>
+<li class="drop"><a href="#"> ? </a></li>
+</ul>
+</li>
+<li class="nav"><a href="#" class="nav">Complaints</a>
+<ul class="nav">
+<li class="drop"><a href="cms.html">Maintenance</a></li>
+<li class="drop"><a href="cms.html">Payment</a></li>
+<li class="drop"><a href="med.html">Clearence</a></li>
+<li class="drop"><a href="chd.html">Services</a></li>
+</ul>
+</li>
+<li class="nav"><a href="#" class="nav">Departments</a>
+<ul class="nav">
+<li class="drop"><a href="application.html">Survey</a></li>
+<li class="drop"><a href="fee.html">FCivil</a></li>
+<li class="drop"><a href="activity.html">Architecture</a></li>
+<li class="drop"><a href="activity.html">Production</a></li>
+<li class="drop"><a href="activity.html">Marketing</a></li>
+</ul>
+</li>
+<li class="nav"><a href="about.html" class="nav">About Us</a></li>
+<li class="nav"><a href="contacts.html" class="nav">Contacts</a></li>
+
+
+</ul>
+
+</div>
+
+<!-------------------------------------main content----------------------------->
+
+<div id="main">
+
+<!---------------------------------------------start of right------------------------------->
+
+<div id="right">
+<p class="welcome">Welcome To NHC Housing Management Portal </p>
+<p class="content">
+
+
+<li class="dowload"><a href="{% static 'engine/pages/application form.pdf'%}" class="download" target="_blank"><font color="000">Export Shapefile </font></a></li> <p><font color="white">This file is compatible with most GIS software like QGIS and ArcGIS</font> </p>
+<li class="dowload"><a href="{% static 'engine/pages/application form.pdf'%}" class="download" target="_blank">Export PDF Map</a></li><p><font color="white">This file is for presentation purposes such as events, books,journals e.t.c.</font></p>
+<li class="dowload"><a href="{% static 'engine/pages/application form.pdf'%}" class="download" target="_blank"> <font color="000">Export KML File</font></a></li><p><font color="white">This file preview in the Google Earth Software</font></p>
+<li class="dowload"><a href="{% static 'engine/pages/application form.pdf'%}" class="download" target="_blank">Export TIFF File</a></li><p><font color="white">This file is best for raw formats software like QGIS and ArcGIS</font></p>
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<font face="Mistral" size="5px" color="#008000">
+"At NHC, We offer Service to The People and Fear God"<br>
+  
+</font>
+  
+</font></p>
+
+<p>We offer Service to The People and Fear God"</p>
+
+
+</div>
+
+<!-----------------------------------start of left side bar------------------------------------>
+
+<div id="left">
+
+
+
+<!--------------------------recent news--------------------->
+<div id="left2">
+<h5 class="news"><font color="fff">Current News</font></h5>
+<iframe src="{% static 'engine/pages/news.html'%}" width="246px" height="350px" scrolling="No" border="0">
+</iframe>
+
+
+</div>
+
+<!-----------------------------------------footer------------------------------------------->
+
+<div id="footer"><br>
+NHC HOUSING MANAGEMENT <br>
+&copy; 2018 <br>
+Designed and Powered By:<font color="#7cf000"> KIPNGETICH YEGON. </font>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+</body>
+
+</html>
