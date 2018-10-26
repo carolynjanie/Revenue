@@ -18,32 +18,9 @@ from collections import Counter
 
 def home(request):
 	return render(request,'index1.html')
-	business=Business_Info.objects.all()
-	expectpermit=[]
-	paidpermit=[]
-	paidnot=expectpermit-paidpermit
-
-	for b in business:
-			paidpermit.append(b.permit_expected)
-			print
-			paidnot.append(b.paid_permit)
-
-			bp_count=counter(paidpermit)
-			print (sum(bp))
-			ep=counter(paidnot)
-			print (ep)
-			xAxisName = [i for i,_ in enumerate(bp_count)]
-			print(xAxisName)
-			query = request.GET.get('q')
-			if query:
-				qs = qs.filter(name__icontains=query)
-			return render(request,'index.html',
-			{
-			'qs':qs,
-			'bp':bp,
-			'ep':ep,
-			'xAxisName':xs
-			})
+def about(request):
+	return render(request,'about.html')
+	
 
 def footprint(request):
 	foot = serialize('geojson',Footprints.objects.all() )
@@ -54,9 +31,27 @@ def parcel(request):
 def parkingview(request):
 	Park = serialize('geojson',parking.objects.all() )
 	return HttpResponse(Park, content_type='json' )
+def tax(request):
+	tax = serialize('geojson',Business_Info.objects.all() )
+	return HttpResponse(tax, content_type='json' )
 class Homepage(View):
 	def get(self,request):
-		qs = Footprints.objects.all()
+		# business info
+		business=Business_Info.objects.all()
+		expectpermit=[]
+		paidpermit=[]
+		paidnot = []
+
+		for b in business:
+			expectpermit.append(b.permit_expected)
+			paidpermit.append(b.paid_permit)
+			npp = float(b.permit_expected)-float(b.paid_permit)
+			paidnot.append(npp)
+		ep = sum(expectpermit)
+		ep = float(ep)
+		pm = sum(paidpermit)
+		npp = sum(paidnot)
+		
 		paid = []
 		not_paid = []
 		parki = parking.objects.all()
@@ -78,23 +73,21 @@ class Homepage(View):
 		pd = [pd_count[x]*50 for x in pd_count]
 		print(sum(pd))
 		np = [np_count[x]*50 for x in np_count]
-		query = request.GET.get('q')
-		if query:
-			qs = qs.filter(name__icontains=query)
+		# query = request.GET.get('q')
+		# if query:
+		# 	qs = qs.filter(name__icontains=query)
 
 		return render(request,'index.html',
 			{
-			'qs':qs,
+			# 'qs':qs,
 			'pd':pd,
 			'np':np,
-			'xs':xs
+			'xs':xs,
+			'ep':ep,
+			'npp':npp,
+			'pm':pm
 			})
-		
-
-
-
-
-
+	
 
 class FootprintInfoEncoder(View):
 	def get(self,request,ftid):
@@ -136,60 +129,6 @@ class StairsInfoEncoder(View):
 						raise CommandError('No Owners registered alonside the room. Kindly do the necessary and try again')
 					else:
 						resp.append({'sector':biz.business_sector,'activity':biz.business_activity,'pnumber':biz.permit_number,
-							'ppaid':biz.paid_permit,'pbal':biz.permit_bal,'owner':owner.name,'phone':owner.phone,'idno':owner.idno})
+							'ppaid':biz.paid_permit,'owner':owner.name,'phone':owner.phone,'idno':owner.idno})
 		return JsonResponse({'objs':resp})
-# def ContactView(request):
-# 	form_class = e_forms.ContactForm
-# 	if request.method == 'POST':
-# 		form = form_class(data=request.POST)
-# 		if form.is_valid():
-# 			fullname = request.POST.get('fullname')
-# 			newMessage = Contacts.objects.create(fullname=fullname)
-# 			newMessage.save()
-# 			print('testing')
-# 			return HttpResponse('it worked')
-
-# 		else:
-# 			form = form_class
-# 	return render(request,'index.html',{'form':form_class})
-
-# def myFirstChart(request):
-
-#     #Chart data is passed to the `dataSource` parameter, like a dictionary in the form of key-value pairs.
-#     dataSource = OrderedDict()
-
-#     # The `chartConfig` dict contains key-value pairs of data for chart attribute
-#     chartConfig = OrderedDict()
-#     chartConfig["caption"] = "Countries With Most Oil Reserves [2017-18]"
-#     chartConfig["subCaption"] = "In MMbbl = One Million barrels"
-#     chartConfig["xAxisName"] = "amount of money paid"
-#     chartConfig["yAxisName"] = "yg"
-#     chartConfig["numberSuffix"] = "K"
-#     chartConfig["theme"] = "fusion"
-
-#     # The `chartData` dict contains key-value pairs of data
-#     chartData = OrderedDict()
-   
-
-#     dataSource["chart"] = chartConfig
-#     dataSource["data"] = []
-
-#     # Convert the data in the `chartData`array into a format that can be consumed by FusionCharts.
-#     #The data for the chart should be in an array wherein each element of the array 
-#     #is a JSON object# having the `label` and `value` as keys.
-
-#     #Iterate through the data in `chartData` and insert into the `dataSource['data']` list.
-#     for key, value in chartData.items():
-#         data = {}
-#     data["label"] = key
-#     data["value"] = value
-#     dataSource["data"].append(data)
-
-
-# # Create an object for the column 2D chart using the FusionCharts class constructor
-# # The chart data is passed to the `dataSource` parameter.
-# column2D = FusionCharts("column2d", "myFirstChart", "600", "400", "myFirstchart-container", "json", dataSource)
-
-# return render(request, 'index.html', {
-#     'output': column2D.render()
-# })
+#

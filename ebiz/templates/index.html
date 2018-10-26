@@ -5,6 +5,10 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{%static 'hchart/highcharts.css' %}">
 <script type="text/javascript" src="{%static 'hchart/highcharts.js' %}"></script>
+  <!-- Plotly.js -->
+  <script src="{%static 'plotly/plotly.min.js'%}"></script>
+  <!-- Numeric JS -->
+  <script src="{%static 'plotly/numeric.js'%}"></script>
 <h1>
     {% for item in slots %}
     {{item.pid}} <br>
@@ -20,14 +24,14 @@
 
   var myStyle = {
     "color": "#ff7800",
-    "weight": 5,
+    "weight": 1,
     "opacity": 0.65,
-    "roofColor": "purple"
+    "transparency": 10
   };
 
   var myStyle1 = {
-    "color": "black",
-    "weight": 5,
+    "color": "orange",
+    "weight": 0,
     "opacity": 0.65
   };
 
@@ -174,7 +178,7 @@ $.get("{% url 'ebiz:ftp-data' %}",function(data,success){
                       success: function(data){
                         html='<table class="table table-responsive table-stripped table-hover" style="max-height:500px;max-width:500px;width:auto !important;"><thead><th>Business Sector</th><th>Business Activity</th><th>Permit Number</th><th>Paid Permit</th><th>Permit Balance</th><th>Business Owner</th><th>PPhone Number</th><th>ID Number</th></thead>';
                         $.each(data.objs, function(key,obj){
-                          html+='<tr><td>'+obj.sector+'</td><td>'+obj.activity+'</td><td>'+obj.pnumber+'</td><td>'+obj.ppaid+'</td><td>'+obj.pbal+'</td><td>'+obj.owner+'</td><td>'+obj.phone+'</td><td>'+obj.idno+'</td></tr>';
+                          html+='<tr><td>'+obj.sector+'</td><td>'+obj.activity+'</td><td>'+obj.pnumber+'</td><td>'+obj.ppaid+'</td><td>'+'</td><td>'+obj.owner+'</td><td>'+obj.phone+'</td><td>'+obj.idno+'</td></tr>';
                         });
                         html+='</table>';
                         popup.setContent(html).openOn(map);
@@ -212,7 +216,8 @@ $.get("{% url 'ebiz:ftp-data' %}",function(data,success){
     </script>
     {% leaflet_map 'yourmap' callback="ebiza" %}
 
-    <div id="container"></div>
+    <div style="width: :50px;" id="container"></div>
+
 <script type="text/javascript">
    //Highcharts
     Highcharts.chart('container',{
@@ -233,7 +238,7 @@ $.get("{% url 'ebiz:ftp-data' %}",function(data,success){
       series: [ {
         name: 'Paid',
         data: {{pd|safe}},
-        color: 'green'
+        color: 'orange'
       },{
         name: 'Not Paid',
         data: {{np|safe}},
@@ -241,33 +246,19 @@ $.get("{% url 'ebiz:ftp-data' %}",function(data,success){
       }]
     });
 </script>
+{{ep}}<br>{{pm}}<br>{{npp}}
 <div id="piechart"></div>
-<script type="text/javascript">
-  Highcharts.chart('piechart',{
-      chart: {
-        type: 'column'
-      },
-      title: {
-        text: 'Payment Status against Amount paid'
-      },
-      xAxis: {
-categories: ['Jan', 'Feb', 'Mar','Apr']
-},
-yAxis: {
-title: {
-text: 'numbers'
-}
-},
-series: [{
-name: 'John',
-data: [1, 0, 4]
-}, {
-name: 'King',
-data: [5, 7, 3]
-      },{
-        
-      }]
-    });
-  
-</script>
+
+<h1 <span style=color:purple> Analysis for the money received as business permit fees.</span>
+  </h1>
+ <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <script>
+  var data = [{
+  values: [{{ep}},{{pm}},{{npp}}],
+  labels: ['Expected', 'Paid', 'Not Paid'],
+  type: 'pie'
+}];
+
+Plotly.newPlot('myDiv', data);
+  </script>
 {% endblock %}

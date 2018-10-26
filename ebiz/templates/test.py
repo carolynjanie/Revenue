@@ -8,3 +8,8 @@ api_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_c
 r = requests.get(api_URL, auth=HTTPBasicAuth(consumer_key, consumer_secret))
 
 print (r.text)
+
+
+
+
+# https://github.com/carolynjanie/Revenue

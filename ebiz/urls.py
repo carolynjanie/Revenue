@@ -1,16 +1,18 @@
 from django.urls import path, include
 from djgeojson.views import GeoJSONLayerView
-from ebiz.models import Footprints,Parcels,parking
+from ebiz.models import Footprints,Parcels,parking,Business_Info
+
 from . import views
 
 app_name='ebiz'
 
 
 urlpatterns = [
-    # path('contact/',views.ContactView,name='contact'),
     path('',views.home,name='home'),
     path('home/',views.Homepage.as_view(), name='index'),
+    path('about/',views.Homepage.as_view(), name='about'),
     path('parcels/',views.parcel,name='parcels'),
+    path('tax/',views.tax,name='tax'),
     path('parks/',views.parkingview,name='parks'),
     path('parcel-data/',GeoJSONLayerView.as_view(model=Parcels),name='parcel-data'),
     path('footprint-data/',GeoJSONLayerView.as_view(model=Footprints),name='ftp-data'),
