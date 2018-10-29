@@ -142,7 +142,7 @@ var baselayer={
                         geocoder:L.Control.Geocoder.nominatim()
                       }).addTo(map);
 
-$.get("{% url 'ebiz:ftp-data' %}",function(data,success){
+$.get("{% url 'ebiz:footd' %}",function(data,success){
   fts=new OSMBuildings(map)
     .set(data).click(function(id,lat,lng){
       if(id){

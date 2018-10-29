@@ -5,7 +5,7 @@ from ebiz import models as e_models
 
 # Register your models here.
 class FootprintsAdmin(LeafletGeoAdmin):
-	list_display=['geom','plot_no','name','fid']
+	list_display=['geom','plot_no','name']
     
 class ParcelsAdmin(LeafletGeoAdmin):
 	list_display = ['geom','plot_no','area']

@@ -30,9 +30,12 @@ footprints_mapping = {
     'osm_id': 'osm_id',
     'name': 'name',
     'plot_no': 'plot_no',
-    'height': 'height',
     'category': 'category',
-    'fid': 'fid',
+    'fid_1': 'fid_1',
+    'wallcolor': 'wallColor',
+    'roofcolor': 'roofColor',
+    'minheight': 'minHeight',
+    'height': 'height',
     'geom': 'MULTIPOLYGON',
 }
 

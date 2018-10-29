@@ -20,10 +20,9 @@ def home(request):
 	return render(request,'index1.html')
 def about(request):
 	return render(request,'about.html')
-	
-
 def footprint(request):
-	foot = serialize('geojson',Footprints.objects.all() )
+	foot = serialize('geojson',Footprints.objects.all())
+	print(foot)
 	return HttpResponse(foot, content_type='json' )
 def parcel(request):
 	parcel= serialize('geojson',Parcels.objects.all() )
@@ -79,7 +78,7 @@ class Homepage(View):
 
 		return render(request,'index.html',
 			{
-			# 'qs':qs,
+		
 			'pd':pd,
 			'np':np,
 			'xs':xs,

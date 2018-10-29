@@ -1,0 +1,169 @@
+[
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "ebiz",
+    "model": "contacts"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "ebiz",
+    "model": "parcels"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "ebiz",
+    "model": "parking"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "ebiz",
+    "model": "business_info"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "ebiz",
+    "model": "footprints"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "ebiz",
+    "model": "rooms"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "ebiz",
+    "model": "floors"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 14,
+  "fields": {
+    "app_label": "ebiz",
+    "model": "personal_info"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 15,
+  "fields": {
+    "app_label": "ebiz",
+    "model": "businessoperator"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "a4p828rd26e3z3kq5hissj3ctc81hi0s",
+  "fields": {
+    "session_data": "MDczODg1MWVlMWM5NTQ1Mjc5Zjc5MDk4YTlkZWFjOTM2MDU0YjAwMzp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzZlMDBjNWIzZTUyMzAzYzM5YzYxNDAwOGQ4NTA2MDI2OWQwMWU3In0=",
+    "expire_date": "2018-10-17T08:41:44.554Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "fbgptc8sfd4rnugb8ft3hsk8200e0v6g",
+  "fields": {
+    "session_data": "MDczODg1MWVlMWM5NTQ1Mjc5Zjc5MDk4YTlkZWFjOTM2MDU0YjAwMzp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzZlMDBjNWIzZTUyMzAzYzM5YzYxNDAwOGQ4NTA2MDI2OWQwMWU3In0=",
+    "expire_date": "2018-10-20T12:50:54.710Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "k7019ndf8xx8mhi02atj5nay3woeaach",
+  "fields": {
+    "session_data": "MDczODg1MWVlMWM5NTQ1Mjc5Zjc5MDk4YTlkZWFjOTM2MDU0YjAwMzp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzZlMDBjNWIzZTUyMzAzYzM5YzYxNDAwOGQ4NTA2MDI2OWQwMWU3In0=",
+    "expire_date": "2018-10-05T22:51:42.808Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "px64s4wa2o0nmmiizqx070b1y45flwu2",
+  "fields": {
+    "session_data": "MDczODg1MWVlMWM5NTQ1Mjc5Zjc5MDk4YTlkZWFjOTM2MDU0YjAwMzp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzZlMDBjNWIzZTUyMzAzYzM5YzYxNDAwOGQ4NTA2MDI2OWQwMWU3In0=",
+    "expire_date": "2018-11-11T16:00:33.572Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "uhnr1h61ffz1sbs1pm3zxkxu5udxtfmf",
+  "fields": {
+    "session_data": "NjIxODY1MjI0MmQzOTUyZTc3NmVhOWQyNzc2MDU4YTMzNTIzYjdkMDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxNDdiNGRkNDY1MmNjODcwODkwYThhMjk2Nzk2ODk1NTg0YzRlNGU1In0=",
+    "expire_date": "2018-10-05T18:14:52.505Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "y4t1gpq6h98cbyjotzbucio2vr6lqz7a",
+  "fields": {
+    "session_data": "MDczODg1MWVlMWM5NTQ1Mjc5Zjc5MDk4YTlkZWFjOTM2MDU0YjAwMzp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIxMzZlMDBjNWIzZTUyMzAzYzM5YzYxNDAwOGQ4NTA2MDI2OWQwMWU3In0=",
+    "expire_date": "2018-10-23T09:42:43.811Z"
+  }
+}

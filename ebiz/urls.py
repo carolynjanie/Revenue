@@ -10,8 +10,9 @@ app_name='ebiz'
 urlpatterns = [
     path('',views.home,name='home'),
     path('home/',views.Homepage.as_view(), name='index'),
-    path('about/',views.Homepage.as_view(), name='about'),
     path('parcels/',views.parcel,name='parcels'),
+    path('footd/',views.footprint,name='footd'),
+    path('about/',views.about,name='about'),
     path('tax/',views.tax,name='tax'),
     path('parks/',views.parkingview,name='parks'),
     path('parcel-data/',GeoJSONLayerView.as_view(model=Parcels),name='parcel-data'),

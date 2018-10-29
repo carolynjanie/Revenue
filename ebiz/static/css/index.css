@@ -22,21 +22,3 @@
             padding: 0;
         }
 
- var owl = $('.carousel-fade-transition');
-  owl.owlCarousel({
-    nav: true,
-    dots: true,
-    items: 1,
-    loop: true,
-    navText: ["&#xe605","&#xe606"],
-    autoplay: true,
-    animateOut: 'fadeOut',
-    autoplayTimeout: 4000
-    }); 
-hr {
-  border: 0;
-  border-top: 1px solid #e5e5e5;
-  clear:both;  
-  height:0; 
-  margin:2.5rem auto;
-}

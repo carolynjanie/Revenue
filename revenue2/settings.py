@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'revenue2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'project',
+        'NAME': 'projec',
         'USER': 'postgres',
         'PASSWORD': 12345678,
         'HOST': 'localhost',

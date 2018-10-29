@@ -4,16 +4,19 @@ import datetime
 from datetime import datetime
 
 
-
 class Footprints(models.Model):
     id = models.BigIntegerField(primary_key=True)
     osm_id = models.CharField(max_length=254)
     name = models.CharField(max_length=254)
     plot_no = models.FloatField()
-    height = models.FloatField()
     category = models.CharField(max_length=254)
-    fid = models.CharField(max_length=254)
+    fid_1 = models.CharField(max_length=254)
+    wallcolor = models.CharField(max_length=20)
+    roofcolor = models.CharField(max_length=20)
+    minheight = models.FloatField()
+    height = models.BigIntegerField()
     geom = models.MultiPolygonField(srid=4326)
+
     def __str__(self):
         return '%s' %(self.name)
 
@@ -36,7 +39,7 @@ class Parcels(models.Model):
         return '%s' %(self.plot_no)
 
 class Personal_Info(models.Model):
-    footprints= models.ForeignKey('Footprints', models.CASCADE, db_column='footprints')
+    footprints= models.ForeignKey('Footprints', on_delete=models.CASCADE, db_column='footprints')
     name=models.CharField(max_length=54)
     phone_no=models.CharField(max_length=10)
     
@@ -51,7 +54,7 @@ class parking(models.Model):
         verbose_name_plural = "Parking"
 
 class Floors(models.Model):
-    footprint=models.ForeignKey('Footprints', models.CASCADE, db_column='footprint')
+    footprint=models.ForeignKey('Footprints', on_delete=models.CASCADE, db_column='footprint')
     floor_no=models.BigIntegerField()
     floor_name=models.CharField(max_length=254)
     def __str__(self):
